@@ -1,0 +1,33 @@
+# Nervous - EDA Sensor
+
+The **Nervous** initiative is a project embracing open-hardware and open-source
+principles, with the goal of delivering wearable sensors and accompanying
+software for the analysis of Autonomic Nervous System (SNA) activity.
+
+The entire project is published under the MIT Licence.
+
+## Description
+
+This EDA sensor uses continuous multifrequency impedance spectroscopy to measure skin conductivity at 16 simultaneous frequencies with a rate of 8 spectra per second.
+The method is fully described detailed in [B. Massot, E. Desmazure, A. Montalibet, E. McAdams and C. Gehin, "A Portable Device Performing Continuous Impedance Spectroscopy for Skin Conductivity," in IEEE Sensors Journal, doi: 10.1109/JSEN.2024.3485187](https://ieeexplore.ieee.org/document/10738317).
+The embedded electronic circuit employs two microcontrollers.
+The first one is a PSoC Analog co-processor (Infineon) for analog signal generation and conditioning.
+The second one is an ISP1807 (Insight SiP) which houses a nRF52840 (Nordic Semiconductor) for voltage and current sampling, impedance calculation and Bluetooth Low Energy communication.
+
+**hardware**: Contained within this folder are ECAD files for the production of PCBs and the assembly of circuits for a wireless, wrist-worn EDA sensor.
+
+**firmware**: This folder contains sources to build binaries for the programming of the two microcontrollers.
+Pre-built binaries are also attached to releases of this project.
+
+**software**: While this sensor is primarily intended to be used with the ```nervous-sensors``` Python package included in the Nervous project toolkit, a standalone, web-application is provided for simple usage of the sensor, including sensor control, real-time data visualization and recording.
+
+## Contact
+
+- Author: Bertrand Massot
+- Affiliation: INSA Lyon, Ecole Centrale Lyon, Universite Claude Bernard Lyon
+1, CPE Lyon, CNRS, INL UMR 5270, 69600 Villeurbanne France.
+- Contact email: <bertrand.massot@insa-lyon.fr>
+
+## Funding
+
+This work was supported the French National Reasearch Agency (ANR) under the grant ANR-22-CE31-0023-03 RENFORCE.

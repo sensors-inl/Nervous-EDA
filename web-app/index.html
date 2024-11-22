@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="libraries/material-icons/icon.css">  <!-- Bluetooth icon -->
+    <link rel="stylesheet" href="libraries/material-components-web/material-components-web.min.css">
+    <script src="libraries/material-components-web/material-components-web.min.js"></script> <!-- Nice buttons and so -->
+    <script src="libraries/hammerjs-2.0.8/hammer.min.js"></script>
+    <script src="libraries/chart/chart.umd.js"></script> <!-- Nice graphes -->
+    <script src="libraries/chart/chartjs-plugin-zoom.min.js"></script>
+    <script src="libraries/jsxgraph-1.3.2/jsxgraphcore.js"></script> <!-- Circle estimator -->
+    <script src="libraries/google-protobuf/google-protobuf.min.js"></script>  <!-- Protocol buffer -->
+    <title>Nervous EDA</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body class="mdc-typography">
+
+    <div class="mdc-layout-grid">
+
+        <div class="mdc-layout-grid__inner">
+
+            <div class="mdc-layout-grid__cell--span-12">
+                <div class="mdc-card card-internals">
+                    <div class="card-content">
+                        <div id="device-title-id" class="mdc-typography mdc-typography--headline6">Device</div>
+                        <hr>
+                    </div>
+                    <div class="card-content" style="text-align: center;">
+                        <button class="app-ble-status-icon mdc-icon-button material-icons"
+                            style="height: 80px; width: 80px; font-size: 60px;" disabled>bluetooth</button>
+                        <button class="app-bat-status-icon mdc-icon-button material-icons"
+                            style="height: 80px; width: 80px; font-size: 60px;" disabled>battery_0_bar</button>
+                    </div>
+                    <div class="mdc-card__actions">
+                        <button onclick="onConnectBLEButtonClick()"
+                            class="app-ble-connect-button mdc-button mdc-button--raised mdc-card__action mdc-card__action--button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="app-ble-connect-button-label mdc-button__label">Connect</span>
+                        </button>
+                        <button onclick="onStartMeasureButtonClick()" disabled
+                            class="app-start-measure-button mdc-button mdc-button--raised mdc-card__action mdc-card__action--button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Start</span>
+                        </button>
+                        <button onclick="onStopMeasureButtonClick()" disabled
+                            class="app-stop-measure-button mdc-button mdc-card__action mdc-card__action--button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Stop</span>
+                        </button>
+                        <button onclick="onClearGraphClick()"
+                            class="mdc-button mdc-card__action mdc-card__action--button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Clear Graph</span>
+                        </button>
+                        <button onclick="saveCurrentData()"
+                            class="mdc-button mdc-card__action mdc-card__action--button">
+                            <span class="mdc-button__ripple"></span>
+                            <span class="mdc-button__label">Save Data</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+                <div class="mdc-card card-internals-chart">
+                    <div class="card-content">
+                        <div class="mdc-typography mdc-typography--headline6">Nyquist Plot (Ohm)</div>
+                        <hr>
+                    </div>
+                    <div class="chart-content">
+                        <canvas id="app-nyquist-chart-canvas" class="chart-canvas chart-canvas-large"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6">
+                <div class="mdc-card card-internals-chart">
+                    <div class="card-content">
+                        <div class="mdc-typography mdc-typography--headline6">Conductance Plot (uS)</div>
+                        <hr>
+                    </div>
+                    <div class="chart-content">
+                        <canvas id="app-magnitude-chart-canvas" class="chart-canvas chart-canvas-large"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+                <div class="mdc-card card-internals-chart">
+                    <div class="card-content">
+                        <div class="mdc-typography mdc-typography--headline6">History Plot (uS)</div>
+                        <hr>
+                    </div>
+                    <div class="chart-content">
+                        <canvas id="app-history-chart-canvas" class="chart-canvas chart-canvas-large"></canvas>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div>
+        <img style="height: 40px; vertical-align: middle; margin-bottom: 3px;" src="build/icon.png">
+        <span>&copy; 2024 INSA Lyon, CNRS, INL UMR 5270</span>
+    </div>
+    
+    <script>
+        // Needed to use node-cobs
+        let Buffer = Uint8Array;
+        let require = () => { };
+        let module = {};
+    </script>
+    <script src="libraries/node-cobs/index.js"></script>
+    <script src="proto.js"></script>
+    <script type="application/javascript" src="app.js"></script>
+</body>
+
+</html>

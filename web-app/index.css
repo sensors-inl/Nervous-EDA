@@ -1,0 +1,37 @@
+:root {
+  --mdc-theme-primary: #1F3368;
+}
+
+.card-internals { 
+  justify-content: space-between; 
+  display: flex; 
+  flex-direction: column; 
+}
+
+.card-internals-chart { 
+  height: 490px; 
+  justify-content: space-between; 
+  display: flex; 
+  flex-direction: column; 
+}
+
+.card-content {
+  padding: 8px;
+}
+
+.profile-class-narrow {
+  width: 200px;
+}
+
+.chart-content {
+  padding: 8px;
+}
+
+.chart-canvas-large {
+  padding: 8px;
+  height: 420px;
+}
+
+.chart-canvas-small {
+  max-height: 200px;
+}

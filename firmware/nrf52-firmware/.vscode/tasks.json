@@ -1,0 +1,76 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "make -j4",
+            "options": {
+                "cwd": "${workspaceFolder}/pca10056/s140/armgcc"
+            },
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": {
+                "clear": true
+            }
+        },
+        {
+            "label": "clean",
+            "type": "shell",
+            "command": "make clean",
+            "options": {
+                "cwd": "${workspaceFolder}/pca10056/s140/armgcc"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "flash",
+            "type": "shell",
+            "command": "make flash",
+            "options": {
+                "cwd": "${workspaceFolder}/pca10056/s140/armgcc"
+            },
+            "group": "build",
+            "problemMatcher": [],
+            "presentation": {
+                "clear": true
+            }
+        },
+        {
+            "label": "flash_softdevice",
+            "type": "shell",
+            "command": "make flash_softdevice",
+            "options": {
+                "cwd": "${workspaceFolder}/pca10056/s140/armgcc"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "erase",
+            "type": "shell",
+            "command": "make erase",
+            "options": {
+                "cwd": "${workspaceFolder}/pca10056/s140/armgcc"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "reset",
+            "type": "shell",
+            "command": "make reset",
+            "options": {
+                "cwd": "${workspaceFolder}/pca10056/s140/armgcc"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "viewer",
+            "type": "shell",
+            "command": "JLinkRTTViewer",
+            "problemMatcher": []
+        }
+    ]
+}

@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "nervous-eda")(type "KiCad")(uri "${KIPRJMOD}/nervous-eda.kicad_sym")(options "")(descr ""))
+)

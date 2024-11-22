@@ -1,0 +1,50 @@
+{
+    "configurations": [
+        {
+            "name": "nRF52840",
+            "forcedInclude": [
+                "${workspaceFolder}/pca10056/s140/config/app_config.h"
+            ],
+            "includePath": [
+                "${workspaceFolder}/**",
+                "${env:GNU_GCC}/arm-none-eabi/include",
+                "${env:nRF_SDK}/components/softdevice/common/**",
+                "${env:nRF_SDK}/components/softdevice/s140/headers/**",
+                "${env:nRF_SDK}/components/libraries/**",
+                "${env:nRF_SDK}/components/libraries/timer/**",
+                "${env:nRF_SDK}/components/toolchain/**",
+                "${env:nRF_SDK}/components/ble/**",
+                "${env:nRF_SDK}/modules/nrfx",
+                "${env:nRF_SDK}/modules/nrfx/hal/**",
+                "${env:nRF_SDK}/modules/nrfx/mdk/**",
+                "${env:nRF_SDK}/modules/nrfx/drivers/**",
+                "${env:nRF_SDK}/integration/nrfx/**"
+            ],
+            "defines": [
+                "DEBUG",
+                "USE_APP_CONFIG",
+                "BL_SETTINGS_ACCESS_ONLY",
+                "NRF_DFU_SVCI_ENABLED",
+                "NRF_DFU_TRANSPORT_BLE=1",
+                "APP_TIMER_V2",
+                "APP_TIMER_V2_RTC1_ENABLED",
+                "BLE_STACK_SUPPORT_REQD",
+                "BOARD_PCA10056",
+                "CONFIG_GPIO_AS_PINRESET",
+                "FLOAT_ABI_HARD",
+                "MBEDTLS_CONFIG_FILE=\"nrf_crypto_mbedtls_config.h\"",
+                "NRF52840_XXAA",
+                "NRF_CRYPTO_MAX_INSTANCE_COUNT=1",
+                "NRF_SD_BLE_API_VERSION=7",
+                "S140",
+                "SOFTDEVICE_PRESENT"
+            ],
+            "compilerPath": "${env:GNU_GCC}/bin/arm-none-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm",
+            "configurationProvider": "nordic-semiconductor.nrf-connect"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,91 @@
+name: Presubmit Checks
+
+on:
+  pull_request:
+    branches: [ main ]
+
+  schedule:
+    - cron: '0 2 * * 0'  # Weekly
+
+jobs:
+  sanitize:
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: read
+
+    container:
+      image: ghcr.io/charlesnicholson/docker-image:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    env:
+      CC: /usr/bin/clang
+      CXX: /usr/bin/clang++
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: COBS_SANITIZE=1 make -j
+
+  arm-cm4:
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: read
+
+    container:
+      image: ghcr.io/charlesnicholson/docker-image:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: arm-none-eabi-gcc -mcpu=cortex-m4 -Os -Werror -Wall -Wextra -Wconversion -c cobs.c
+
+  linux-gcc:
+    runs-on: ubuntu-latest
+
+    permissions:
+      packages: read
+
+    container:
+      image: ghcr.io/charlesnicholson/docker-image:latest
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    strategy:
+      matrix:
+        architecture: [32, 64]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: COBS_LINUXARCH=${{ matrix.architecture }} make -j
+
+  macos:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: make -j
+
+  win:
+    runs-on: windows-latest
+
+    strategy:
+      matrix:
+        architecture: [32, 64]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        shell: cmd
+        run: |
+          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars${{ matrix.architecture }}.bat"
+          call make-win.bat
