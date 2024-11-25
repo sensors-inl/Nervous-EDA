@@ -19,10 +19,6 @@
   - [Prerequisites](#prerequisites)
   - [Build Instructions](#build-instructions)
 - [Release](#release)
-- [Contributing](#contributing)
-- [Contact](#contact)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
 
 ---
 
@@ -99,32 +95,5 @@ Before building the application, the following dependencies must be installed:
 ## Release
 
 Executable binaries for Windows and Linux are automatically built in CI and are available for download as `.zip` archives from each [release](https://github.com/sensors-inl/Nervous-EDA/releases/latest).
-
----
-
-## Contributing
-
-Contributions are what make the open-source community a great place to learn, inspire, and create. Any contributions you make are greatly appreciated. You can open an issue to report a bug, request a feature, or submit a pull request.
-
----
-
-## Contact
-
-**Bertrand MASSOT**  
-Email: [bertrand.massot@insa-lyon.fr](mailto:bertrand.massot@insa-lyon.fr)
-
----
-
-## License
-
-This project, as part of the Nervous initiative, is licensed under the [MIT License](https://opensource.org/licenses/MIT). For more details, refer to the [LICENSE](LICENSE.md) file.
-
----
-
-## Acknowledgments
-
-The primary contributor to this project is **Bertrand Massot** from INSA Lyon, CNRS, INL UMR 5270, Villeurbanne, France.
-
-This work was supported by the **French National Research Agency (ANR)** under grant **ANR-22-CE31-0023-03 RENFORCE**.
 
 ---

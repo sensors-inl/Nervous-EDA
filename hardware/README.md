@@ -22,14 +22,12 @@
 - [Casing](#casing)
 - [Note on cables and electrodes placement](#note-on-cables-and-electrodes-placement)
 - [Release](#release)
-- [Contributing](#contributing)
-- [Contact](#contact)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
 
 ---
 
 ## Overview
+
+![Nervous EDA printed circuit board](../assets/nervous-eda-pcb.png "Nervous EDA printed circuit board")
 
 This folder contains ECAD files for the production of PCBs and assembly of circuits for the Nervous EDA sensor.
 The printed circuit board was designed using the open source electronics design automation suite [KiCad EDA](https://www.kicad.org/) v7.0.8
@@ -78,7 +76,7 @@ The `Source` folder contains the original KiCad project, created using KiCad ver
 
 ## Casing
 
-![Nervous ECG casing for wrist attachment](../assets/nervous-ecg-casing-wrist.png "Nervous ECG casing for wrist attachment")
+![Nervous EDA casing for wrist attachment](../assets/nervous-eda-casing-wrist.png "Nervous EDA casing for wrist attachment")
 
 Several 3D models are available for producing a casing for the electronics. STEP and STL files are located in the `Casing` folder:
 
@@ -102,32 +100,5 @@ Finally, securely hold the electrodes in place, along with the cables near the e
 ## Release
 
 The entire folder is provided as an archive (`Nervous-EDA-hardware-vX.X.X.zip`) in the [releases](https://github.com/sensors-inl/Nervous-EDA/releases/latest) of this project.
-
----
-
-## Contributing
-
-Contributions are what make the open-source community great. Any contributions are greatly appreciated. You can open an issue to report a bug, request a feature, or submit a pull request.
-
----
-
-## Contact
-
-**Bertrand MASSOT**  
-[bertrand.massot@insa-lyon.fr](mailto:bertrand.massot@insa-lyon.fr)
-
----
-
-## License
-
-This project, along with the entire Nervous initiative, is licensed under the [MIT License](https://opensource.org/licenses/MIT). For more details, see the [License](LICENSE.md) file.
-
----
-
-## Acknowledgments
-
-The main contributors to this project are  Bertrand Massot, Matthieu Mesnage, and Hugo Buy from INSA Lyon, CNRS, INL UMR 5270, Villeurbanne, France.
-
-This work was supported by the **French National Research Agency (ANR)** under grant **ANR-22-CE31-0023-03 RENFORCE**.
 
 ---
