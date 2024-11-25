@@ -1,0 +1,248 @@
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+' # Matches semantic versioning tags like v1.2.3
+      - 'v[0-9]+.[0-9]+.[0-9]+-*' # Also matches pre-release tags like v1.2.3-beta
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: false
+          prerelease: false
+          body_path: CHANGELOG.md
+
+  archive-hardware:
+    needs: create-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 📁 Archive artifacts in .zip file
+        run: |
+          cd hardware
+          zip -qr ${{ github.event.repository.name }}-hardware-${{ github.ref_name }}.zip ./*
+
+      - name: 💾 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            hardware/${{ github.event.repository.name }}-hardware-${{ github.ref_name }}.zip
+
+
+  build-firmware-psoc:
+    needs: create-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ♻️ Prepare environment
+        run: |
+          # update environment
+          # sudo apt-get update
+          # sudo apt-get upgrade -y
+          # Install wine
+          sudo dpkg --add-architecture i386
+          sudo apt-get update
+          sudo apt-get install wine -y
+          wine --version
+          mkdir -p /tmp/wine
+          chmod 777 /tmp/wine
+          export WINEPREFIX=/tmp/wine
+          winecfg
+          # download and unpack GNU ARM GCC
+          echo Download gnu-arm-gcc...
+          wget -q "https://developer.arm.com/-/media/Files/downloads/gnu-rm/5_4-2016q2/gccarmnoneeabi542016q220160622linuxtar.bz2"
+          echo Unpack toolchain...
+          mkdir ${{ github.workspace }}/gcc-arm-none-eabi
+          tar xjf gccarmnoneeabi542016q220160622linuxtar.bz2 -C ${{ github.workspace }}/gcc-arm-none-eabi --strip-components 1
+          echo Done.
+
+      - name: 🔨 Build Project
+        run: |
+          export WINEPREFIX=/tmp/wine
+          cd firmware/psoc/nervous-eda-firmware-psoc.cydsn
+          echo Make script files executables
+          chmod +x Export/*.sh
+          echo Change call to cyelftool as the file was generated under Windows
+          sed -i 's|\.\/Export\/cyelftool|wine Export\/cyelftool.exe|' Export/postbuild.sh
+          echo Start building firmware
+          make TOOLCHAIN_DIR=${{ github.workspace }}/gcc-arm-none-eabi/bin
+          mv output/debug/CortexM0p/nervous-eda-firmware-psoc.hex ${{ github.workspace }}/${{ github.event.repository.name }}-firmware-psoc-full-${{ github.ref_name }}.hex
+
+      - name: 📤 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            ${{ github.event.repository.name }}-firmware-psoc-full-${{ github.ref_name }}.hex
+
+  build-firmware-nrf52:
+    needs: create-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ♻️ Prepare environment
+        run: |
+          echo Update environment
+          # sudo apt-get update
+          # sudo apt-get upgrade -y
+          # download and unpack GNU ARM GCC
+          sudo apt-get install -y cpio libncurses5
+
+      - name: ♻️ Install nrfutil
+        run: |
+          echo Download nrfutil...
+          wget -q https://developer.nordicsemi.com/.pc-tools/nrfutil/x64-linux/nrfutil
+          echo Install nrfutil...
+          mv nrfutil /usr/local/bin
+          chmod +x /usr/local/bin/nrfutil
+          nrfutil install nrf5sdk-tools
+          echo Done.
+
+      - name: ♻️ Install nRF command-line tools
+        run: |
+          mkdir nrf-command-line-tools
+          echo Download nRF command-line tools and uncompress...
+          wget -qO - "https://nsscprodmedia.blob.core.windows.net/prod/software-and-other-downloads/desktop-software/nrf-command-line-tools/sw/versions-10-x-x/10-24-2/nrf-command-line-tools-10.24.2_linux-amd64.tar.gz" | tar --no-same-owner -xz -C ./nrf-command-line-tools --strip-components=2
+          echo Add to path...
+          echo "${{ github.workspace }}/nrf-command-line-tools/bin" >> $GITHUB_PATH
+          echo Done.
+
+
+      - name: ♻️ Install GNU ARM GCC
+        run: |
+          echo Download gnu-arm-gcc...
+          wget "https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2"
+          echo Unpack toolchain...
+          mkdir ${{ github.workspace }}/gcc-arm-none-eabi
+          tar xjf gcc-arm-none-eabi-10-2020-q4-major-x86_64-linux.tar.bz2 -C ${{ github.workspace }}/gcc-arm-none-eabi --strip-components 1
+          cd ${{ github.workspace }}/gcc-arm-none-eabi
+          ls -a
+          echo Done.
+
+      - name: ♻️ Install nRF5 SDK
+        run: |
+          echo Download nRF5 SDK...
+          wget "https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v17.x.x/nRF5_SDK_17.1.0_ddde560.zip"
+          echo Unpack SDK
+          unzip nRF5_SDK_17.1.0_ddde560.zip
+          echo Done.
+
+      - name: 🔨 Build Project
+        run: |
+          echo Build project
+          cd firmware/nrf52-packager
+          make SDK_ROOT=${{ github.workspace }}/nRF5_SDK_17.1.0_ddde560 GNU_INSTALL_ROOT="${{ github.workspace }}/gcc-arm-none-eabi/bin/" GNU_VERSION="$(${{ github.workspace }}/gcc-arm-none-eabi/bin/arm-none-eabi-gcc -dumpversion)" VERSION_STRING=${{ github.ref_name }} NAME_PREFIX=${{ github.event.repository.name }}-firmware-nrf52
+          echo Done.
+          
+      - name: 📤 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            firmware/nrf52-packager/${{ github.event.repository.name }}-firmware-nrf52*
+
+
+  build-app-win32:
+    needs: create-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    container:
+      image: electronuserland/builder:wine-mono
+    env:
+      ARCH: x64
+      PLATFORM: win32
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: initial-repository
+
+      - name: ♻️ Setup environment
+        run: |
+          apt-get update
+          apt-get upgrade -y
+          apt-get install dpkg -y
+          apt-get install fakeroot -y
+          apt-get install zip -y
+          # Create a directory for Wine configuration
+          mkdir -p /tmp/wine
+          chmod 777 /tmp/wine
+          export WINEPREFIX=/tmp/wine
+          winecfg
+
+      - name: 🔨 Install dependencies and build
+        run: |
+          cp -rf ./initial-repository/web-app/* .
+          export WINEPREFIX=/tmp/wine
+          npm install --save-dev electron
+          npm install --save-dev @electron-forge/cli
+          npx electron-forge import
+          npx electron-forge package --arch=${{ env.ARCH }} --platform=${{ env.PLATFORM }}
+
+      - name: 📁 Archive artifacts in .zip file
+        run: |
+          cd out
+          zip -qr ${{ github.event.repository.name }}-app-${{ env.ARCH }}-${{ env.PLATFORM }}-${{ github.ref_name }}.zip ./*
+
+      - name: 📤 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            out/${{ github.event.repository.name }}-app-${{ env.ARCH }}-${{ env.PLATFORM }}-${{ github.ref_name }}.zip
+
+  build-app-linux:
+    needs: create-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    container:
+      image: electronuserland/builder
+    env:
+      ARCH: x64
+      PLATFORM: linux
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: initial-repository
+
+      - name: ♻️ Setup environment
+        run: |
+          apt-get update
+          apt-get upgrade -y
+          apt-get install zip -y
+
+      - name: 🔨 Install dependencies and build
+        run: |
+          cp -rf ./initial-repository/web-app/* .
+          npm install --save-dev electron
+          npm install --save-dev @electron-forge/cli
+          npx electron-forge import
+          npx electron-forge package
+
+      - name: 📁 Archive artifacts in .zip file
+        run: |
+          cd out
+          zip -qr ${{ github.event.repository.name }}-app-${{ env.ARCH }}-${{ env.PLATFORM }}-${{ github.ref_name }}.zip ./*
+
+      - name: 📤 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            out/${{ github.event.repository.name }}-app-${{ env.ARCH }}-${{ env.PLATFORM }}-${{ github.ref_name }}.zip

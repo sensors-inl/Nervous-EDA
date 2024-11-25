@@ -9,15 +9,14 @@
 # Generated Assets and Resources
 Debug/
 Release/
-Export/
 */codegentemp
-*/Generated_Source
 *_datasheet.pdf
 *_timing.html
 *.cycdx
 *.cyfit
 *.rpt
 *.svd
+*.LOG
 BUILD.log
 
 # Archives

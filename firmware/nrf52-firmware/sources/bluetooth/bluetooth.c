@@ -73,11 +73,11 @@ NRF_LOG_MODULE_REGISTER();
  * Local constants
  */
 
-#define DEVICE_NAME "RENFORCE EDA"                                          /**< Name of device. Will be included in the advertising data. */
+#define DEVICE_NAME "EDA"                                                   /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME "INL - INSA Lyon"                                 /**< Manufacturer. Will be passed to Device Information Service. */
-#define HARDWARE_REV "0.2b"                                                 /**< Hardware version. Will be passed to Device Information Service */
+#define HARDWARE_REV "1.0"                                                  /**< Hardware version. Will be passed to Device Information Service */
 #define FIRMWARE_REV xstr(APP_VERSION_STRING)                               /**< Firmware version. Will be passed to Device Information Service */
-#define MODEL "EDA Spectrometer"                                            /**< Model name. Will be passed to Device Information Service */
+#define MODEL "Nervous EDA Sensors"                                         /**< Model name. Will be passed to Device Information Service */
 
 #define APP_ADV_INTERVAL 500 //1000    /**< The advertising interval (in units of 0.625 ms). */
 #define APP_ADV_DURATION 30000   /**< The advertising duration in units of 10 milliseconds. */

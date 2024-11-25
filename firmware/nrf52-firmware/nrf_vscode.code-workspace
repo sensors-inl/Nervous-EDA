@@ -98,7 +98,6 @@
             "cdefs.h": "c",
             "eda_dsp.h": "c",
             "delay.h": "c",
-            "renforce.pb.h": "c",
             "idac_array.h": "c"
         }
 	}

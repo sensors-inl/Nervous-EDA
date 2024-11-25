@@ -17,7 +17,7 @@ CFLAGS += "-I$(NANOPB_DIR)"
 SRC_FILES += $(NANOPB_DIR)/pb_encode.c  # The nanopb encoder
 SRC_FILES += $(NANOPB_DIR)/pb_decode.c  # The nanopb decoder
 SRC_FILES += $(NANOPB_DIR)/pb_common.c  # The nanopb common parts
-SRC_FILES += $(PROJ_DIR)/sources/renforce.pb.c # The generated proto C file
+SRC_FILES += $(PROJ_DIR)/sources/protocol.pb.c # The generated proto C file
 
 # NRF5 SDK source files specific to this project
 SRC_FILES += \
@@ -461,4 +461,4 @@ sdk_config:
 	java -jar $(CMSIS_CONFIG_TOOL) $(SDK_CONFIG_FILE)
 
 protobuf:
-	python $(PROJ_DIR)/sources/nanopb/generator/nanopb_generator.py -D $(PROJ_DIR)/sources -I $(PROJ_DIR)/protocol renforce.proto
+	python $(PROJ_DIR)/sources/nanopb/generator/nanopb_generator.py -D $(PROJ_DIR)/sources -I $(PROJ_DIR)/protocol protocol.proto

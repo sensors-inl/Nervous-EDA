@@ -27,7 +27,7 @@
 
 /* Project includes */
 
-#include "renforce.pb.h"
+#include "protocol.pb.h"
 
 /*
  * Public constants

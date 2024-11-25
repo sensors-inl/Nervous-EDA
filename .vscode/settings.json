@@ -1,0 +1,5 @@
+{
+    "files.associations": {
+        "protocol.pb.h": "c"
+    }
+}

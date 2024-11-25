@@ -49,7 +49,7 @@ NRF_LOG_MODULE_REGISTER();
 #include "nanocobs/cobs.h"
 #include "nanopb/pb_encode.h"
 #include "nanopb/pb_decode.h"
-#include "renforce.pb.h"
+#include "protocol.pb.h"
 
 /*
  * Local constants

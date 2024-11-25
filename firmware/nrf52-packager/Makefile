@@ -11,12 +11,14 @@ APP_VERSION_STRING := $(subst v,,$(VERSION_STRING))
 TMP_APP_VERSION = $(subst .,,$(APP_VERSION_STRING))
 # Remove existing '0' for major version number
 APP_VERSION ?= $(TMP_APP_VERSION:0%=%)
+# Output nanme prefix
+NAME_PREFIX ?= nervous-eda-firmware-nrf52
 
 # Merged hex
-MRG_HEX := renforce-eda-firmware-full-$(APP_VERSION_STRING).hex
+MRG_HEX := $(NAME_PREFIX)-full-$(VERSION_STRING).hex
 
 # App package
-APP_PKG = renforce-eda-firmware-ota-$(APP_VERSION_STRING).zip
+APP_PKG = $(NAME_PREFIX)-ota-$(VERSION_STRING).zip
 
 DEVICE := nrf52840
 
