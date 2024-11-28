@@ -12,18 +12,19 @@
 	<a href="https://opensource.org/licenses/MIT"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg"/></a>
 </p>
 
+<p align="center">B. Massot, E. Desmazure, A. Montalibet, E. McAdams, and C. Gehin, "A Portable Device Performing Continuous Impedance Spectroscopy for Skin Conductivity," <i>IEEE Sensors Journal</i>, doi: <a href="https://doi.org/10.1109/JSEN.2024.3485187" target="_blank">10.1109/JSEN.2024.3485187</a>.</p>
+
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
 - [Overview](#overview)
-- [Description](#description)
 - [Features](#features)
 - [Instructions](#instructions)
 - [Releases](#releases)
 - [Contributing](#contributing)
-- [Contact](#contact)
 - [License](#license)
 - [Acknowledgments](#acknowledgments)
+- [Contact](#contact)
 
 ---
 
@@ -37,17 +38,7 @@ The device is wireless and transmits the collected data via Bluetooth Low Energy
 ![Illustration of the Nervous EDA sensor and real-time data shown on the application](assets/nervous-eda-overview.png "Nervous EDA sensor and application")
 
 This EDA sensor uses continuous multifrequency impedance spectroscopy to measure skin conductivity at 16 simultaneous frequencies with a rate of 8 spectra per second.
-The method is fully described detailed in [B. Massot, E. Desmazure, A. Montalibet, E. McAdams and C. Gehin, "A Portable Device Performing Continuous Impedance Spectroscopy for Skin Conductivity," in IEEE Sensors Journal, doi: 10.1109/JSEN.2024.3485187](https://ieeexplore.ieee.org/document/10738317).
-The embedded electronic circuit employs two microcontrollers.
-The first one is a PSoC Analog co-processor (Infineon) for analog signal generation and conditioning.
-The second one is an ISP1807 (Insight SiP) which houses a nRF52840 (Nordic Semiconductor) for voltage and current sampling, impedance calculation and Bluetooth Low Energy communication.
-
----
-
-## Description
-
-This EDA sensor uses continuous multifrequency impedance spectroscopy to measure skin conductivity at 16 simultaneous frequencies with a rate of 8 spectra per second.
-The method is fully described detailed in [B. Massot, E. Desmazure, A. Montalibet, E. McAdams and C. Gehin, "A Portable Device Performing Continuous Impedance Spectroscopy for Skin Conductivity," in IEEE Sensors Journal, doi: 10.1109/JSEN.2024.3485187](https://ieeexplore.ieee.org/document/10738317).
+The method is fully described detailed in [B. Massot et al.](https://doi.org/10.1109/JSEN.2024.3485187).
 The embedded electronic circuit employs two microcontrollers.
 The first one is a PSoC Analog co-processor (Infineon) for analog signal generation and conditioning.
 The second one is an ISP1807 (Insight SiP) which houses a nRF52840 (Nordic Semiconductor) for voltage and current sampling, impedance calculation and Bluetooth Low Energy communication.
@@ -90,12 +81,6 @@ We especially welcome contributions to port the nRF52 firmware from nRF5 SDK to 
 
 ---
 
-## Contact
-
-Bertrand MASSOT - [bertrand.massot@insa-lyon.fr](mailto:bertrand.massot@insa-lyon.fr)
-
----
-
 ## License
 
 This project, along with the entire Nervous initiative, is licensed under the [MIT License](https://opensource.org/licenses/MIT). For more details, see the [License](LICENSE.md) file.
@@ -104,8 +89,14 @@ This project, along with the entire Nervous initiative, is licensed under the [M
 
 ## Acknowledgments
 
-The main contributors to this project are Bertrand Massot, Matthieu Mesnage, Tristan Habemont and Hugo Buy from INSA Lyon, CNRS, INL UMR 5270, Villeurbanne, France.
+The main contributors to this project are Bertrand Massot, Matthieu Mesnage, and Hugo Buy from INSA Lyon, CNRS, INL UMR 5270, Villeurbanne, France.
 
 This work was supported by the **French National Research Agency (ANR)** under grant **ANR-22-CE31-0023-03 RENFORCE**.
+
+---
+
+## Contact
+
+[bertrand.massot@insa-lyon.fr](mailto:bertrand.massot@insa-lyon.fr)
 
 ---
