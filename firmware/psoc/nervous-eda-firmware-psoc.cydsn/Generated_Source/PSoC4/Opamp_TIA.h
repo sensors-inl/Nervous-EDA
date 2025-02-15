@@ -68,7 +68,7 @@ void Opamp_TIA_RestoreConfig(void);
 ****************************************/
 
 #define Opamp_TIA_OUTPUT_CURRENT         (1u)
-#define Opamp_TIA_POWER                  (1u)
+#define Opamp_TIA_POWER                  (3u)
 #define Opamp_TIA_MODE                   (0u)
 #define Opamp_TIA_OA_COMP_TRIM_VALUE     (3u)
 #define Opamp_TIA_DEEPSLEEP_SUPPORT      (0u)
