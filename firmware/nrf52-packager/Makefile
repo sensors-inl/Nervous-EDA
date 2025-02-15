@@ -89,7 +89,6 @@ clean:
 	@echo ----------------------------------------------
 	make -C $(APP_DIR)/$(BOARD_TYPE)/$(SOFT_DEVICE)/$(COMPILER_TYPE) clean
 	make -C $(BTL_DIR)/$(BOARD_TYPE)_$(SOFT_DEVICE)_ble/$(COMPILER_TYPE) clean
-	rm -f .\renforce*
 
 generate_settings:
 	@echo .

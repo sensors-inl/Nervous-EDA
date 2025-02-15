@@ -39,7 +39,7 @@ int main(void)
 
 CY_ISR(isr_ext_clk)
 {
-    CyDelayUs(127);
+    CyDelayUs(100);
     IDAC7_Source_SetValue(YPOS_Array[array_index]);
     IDAC7_Sink_SetValue(YNEG_Array[array_index]);
     

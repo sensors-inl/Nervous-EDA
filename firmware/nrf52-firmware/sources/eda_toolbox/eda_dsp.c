@@ -153,9 +153,13 @@ int EDA_DSP_GetImpedance(int16_t * raw_buffer, Impedance * out_array)
     for (n = 0; n < EDA_FREQUENCY_NUM; n ++)
     {
         index = (2*frequency_list[n]/FFT_BIN_RATIO);
-        float complex v = v_cfft[index] + v_cfft[index+1] * _Complex_I;
-        float complex i = i_cfft[index] + i_cfft[index+1] * _Complex_I;
+        float complex v = v_cfft[index] + v_cfft[index+1] * I;
+        float complex i = i_cfft[index] + i_cfft[index+1] * I;       
         float complex y = v / i;
+        // apply delay compensation
+        float delay_arg = 2.0f * PI * (float) frequency_list[n] * -2.8e-5f;
+        float complex delay = cexpf(I * delay_arg);
+        y = y * delay;
         out_array[n].real = crealf(y);
         out_array[n].imag = cimag(y);
         if (isnan(out_array[n].real) || isnan(out_array[n].imag)) {
