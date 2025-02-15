@@ -31,9 +31,11 @@ NRF_LOG_MODULE_REGISTER();
 #include "nrfx_ppi.h"
 #include "nrfx_saadc.h"
 #include "nrfx_timer.h"
+#include "nrfx_rtc.h"
 
 /* Project includes */
 
+#include "calendar/calendar.h"
 #include "eda_cfg.h"
 #include "eda_afe.h"
 
@@ -89,15 +91,6 @@ void EDA_Init(eda_event_handler_t event_handler)
     /* Store event handler for callbacks */
     eda_event_handler = event_handler;
 
-    /* Initialize timer at 8kHz for 4kHz clock generation */
-    nrfx_timer_config_t eda_clk_timer_config = NRFX_TIMER_DEFAULT_CONFIG;
-    eda_clk_timer_config.mode      = NRF_TIMER_MODE_TIMER;
-    eda_clk_timer_config.frequency = NRF_TIMER_FREQ_1MHz;
-    eda_clk_timer_config.bit_width = NRF_TIMER_BIT_WIDTH_16 ;
-    APP_ERROR_CHECK(nrfx_timer_init(&eda_clk_timer, &eda_clk_timer_config, NULL));
-    nrfx_timer_extended_compare(&eda_clk_timer, NRF_TIMER_CC_CHANNEL0, (1000000 / EDA_CLK_FREQ), NRF_TIMER_SHORT_COMPARE0_CLEAR_MASK, false);    /**< Full period for CLK (falling edge) and ADC task trigger */
-    nrfx_timer_extended_compare(&eda_clk_timer, NRF_TIMER_CC_CHANNEL1, (500000 / EDA_CLK_FREQ), 0, false);                                       /**< Half period for CLK (rising edge) task trigger only */
-
     /* Initialize EDA clock pin for toggling task from timer using ppi */
     if (nrfx_gpiote_is_init() != true) {
         APP_ERROR_CHECK(nrfx_gpiote_init());
@@ -144,22 +137,14 @@ void EDA_Init(eda_event_handler_t event_handler)
     APP_ERROR_CHECK(nrfx_saadc_buffer_convert(saadc_buffer_pool[1], SAADC_MAX_SAMPLES_NUMBER));
 
     /* Set up PPI channel to connect timer event to pin task and adc task */
-    static nrf_ppi_channel_t eda_clk_timer_to_pin_ppi_channel_1;   /**< Channel 1 is used for both pin toggle and adc trigger (full timer period) */
-    static nrf_ppi_channel_t eda_clk_timer_to_pin_ppi_channel_2;   /**< Channel 2 is only used for pin toggle (should be rising edge of clock cycle, half timer period) */
-    uint32_t eda_clk_timer_compare0_event_addr = nrfx_timer_compare_event_address_get(&eda_clk_timer, NRF_TIMER_CC_CHANNEL0);
-    uint32_t eda_clk_timer_compare1_event_addr = nrfx_timer_compare_event_address_get(&eda_clk_timer, NRF_TIMER_CC_CHANNEL1);
-    uint32_t eda_clk_pin_task_addr             = nrfx_gpiote_out_task_addr_get(EDA_CLK_PIN);
-    uint32_t adc_task_addr                     = nrfx_saadc_sample_task_get();
-    APP_ERROR_CHECK(nrfx_ppi_channel_alloc(&eda_clk_timer_to_pin_ppi_channel_1));
-    APP_ERROR_CHECK(nrfx_ppi_channel_assign(eda_clk_timer_to_pin_ppi_channel_1, eda_clk_timer_compare0_event_addr, eda_clk_pin_task_addr));
-    APP_ERROR_CHECK(nrfx_ppi_channel_fork_assign(eda_clk_timer_to_pin_ppi_channel_1, adc_task_addr));
-    APP_ERROR_CHECK(nrfx_ppi_channel_alloc(&eda_clk_timer_to_pin_ppi_channel_2));
-    APP_ERROR_CHECK(nrfx_ppi_channel_assign(eda_clk_timer_to_pin_ppi_channel_2, eda_clk_timer_compare1_event_addr, eda_clk_pin_task_addr));
-    
-    /* Enable PPI channels and start timer */
-    APP_ERROR_CHECK(nrfx_ppi_channel_enable(eda_clk_timer_to_pin_ppi_channel_1));
-    APP_ERROR_CHECK(nrfx_ppi_channel_enable(eda_clk_timer_to_pin_ppi_channel_2));
-    nrfx_timer_enable(&eda_clk_timer);
+    static nrf_ppi_channel_t eda_clk_rtc_to_pin;
+    uint32_t eda_clk_rtc_tick_event_addr = nrfx_rtc_event_address_get(CAL_GetRtcInstance(), NRF_RTC_EVENT_TICK);
+    uint32_t eda_clk_pin_task_addr = nrfx_gpiote_out_task_addr_get(EDA_CLK_PIN);
+    uint32_t adc_task_addr = nrfx_saadc_sample_task_get();
+    APP_ERROR_CHECK(nrfx_ppi_channel_alloc(&eda_clk_rtc_to_pin));
+    APP_ERROR_CHECK(nrfx_ppi_channel_assign(eda_clk_rtc_to_pin, eda_clk_rtc_tick_event_addr, eda_clk_pin_task_addr));
+    APP_ERROR_CHECK(nrfx_ppi_channel_fork_assign(eda_clk_rtc_to_pin, adc_task_addr));
+    APP_ERROR_CHECK(nrfx_ppi_channel_enable(eda_clk_rtc_to_pin));
 }
 
 

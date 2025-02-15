@@ -185,12 +185,12 @@ int main(void)
     fsm_state = FSM_STATE_ADVERT;
     BLE_AdvertisingStart(false);
 
+    /* Start calendar */
+    CAL_Init();
+
     /* Start frontend */
     EDA_DSP_Init();
     EDA_Init(eda_event_handler);
-
-    /* Start calendar */
-    CAL_Init();
 
     /* Start Fuel Gauge */
     FGA_Init();

@@ -98,7 +98,10 @@
             "cdefs.h": "c",
             "eda_dsp.h": "c",
             "delay.h": "c",
-            "idac_array.h": "c"
+            "idac_array.h": "c",
+            "nrfx_saadc.h": "c",
+            "nrf_log_ctrl.h": "c",
+            "nrfx_rtc.h": "c"
         }
 	}
 }

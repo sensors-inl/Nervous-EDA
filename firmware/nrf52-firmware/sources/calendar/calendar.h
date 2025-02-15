@@ -21,6 +21,9 @@
 /* Standard C library includes */
 #include "stdint.h"
 
+/* SDK Includes */
+#include "nrfx_rtc.h"
+
 /*
  * Public constants
  */
@@ -63,6 +66,11 @@ void CAL_SetTime(const uint64_t timestamp, const uint32_t us);
  * @param[out] us a pointer provided to store the microseconds elapsed
  */
 void CAL_GetTime(uint64_t * p_timestamp, uint32_t * p_us);
+
+/**
+ * @brief Return rtc instance to get event address
+ */
+nrfx_rtc_t * CAL_GetRtcInstance(void);
 
 #endif /* CALENDAR_H */
 

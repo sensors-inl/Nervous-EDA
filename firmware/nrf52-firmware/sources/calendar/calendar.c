@@ -61,6 +61,7 @@ static void rtc_deinit(void);
 static void rtc_set_time(const uint64_t timestamp, const uint32_t us);
 static void rtc_get_time(uint64_t * p_timestamp, uint32_t * p_us);
 static void rtc_evt_handler(nrfx_rtc_int_type_t type);
+static nrfx_rtc_t * rtc_get_instance(void);
 
 /****************************************************************
  * IMPLEMENTATION
@@ -108,6 +109,13 @@ void CAL_GetTime(uint64_t * p_timestamp, uint32_t * p_us)
     rtc_get_time(p_timestamp, p_us);
 }
 
+/**
+ * @brief Return rtc instance to get event address
+ */
+nrfx_rtc_t * CAL_GetRtcInstance(void) {
+    return rtc_get_instance();
+}
+
 
 /*
  * Local functions
@@ -117,7 +125,7 @@ void CAL_GetTime(uint64_t * p_timestamp, uint32_t * p_us)
 
 /* Set up RTC instance (RTC0 is used by SoftDevice and RTC1 by app_timer module) */
 static nrfx_rtc_t rtc = NRFX_RTC_INSTANCE(CAL_RTC_INSTANCE);        /**< RTC instance */
-#define POWER2_PRESCALER        (15)                                 /**< Power of 2 for RTC frequency (15 is 32768 Hz */
+#define POWER2_PRESCALER        (12)//(15)                                 /**< Power of 2 for RTC frequency (15 is 32768 Hz */
 #define RTC_COUNTER_FREQUENCY   (1 << POWER2_PRESCALER)             /**< RTC counter frequency in Hz (8 - 32768) */
 #define COUNTER_TO_SECS(counts) (counts >> POWER2_PRESCALER)        /**< Macro to convert RTC counter value in seconds */
 #define SECS_TO_COUNTER(secs)   (secs << POWER2_PRESCALER)          /**< Macro to convert seconds to RTC counter value */
@@ -143,6 +151,7 @@ static void rtc_init(void)
     };
     APP_ERROR_CHECK(nrfx_rtc_init(&rtc, &rtc_config, rtc_evt_handler));
     nrfx_rtc_overflow_enable(&rtc, true);
+    nrfx_rtc_tick_enable(&rtc, true);
     nrfx_rtc_enable(&rtc);
     nrfx_rtc_counter_clear(&rtc);
 }
@@ -181,6 +190,11 @@ static void rtc_evt_handler(nrfx_rtc_int_type_t type)
         //NRF_LOG_DEBUG("RTC Overflow");
         time_offset += COUNTER_TO_SECS((1<<24));
     }
+}
+
+static nrfx_rtc_t * rtc_get_instance(void)
+{
+    return &rtc;
 }
 
 /* END OF FILE */
