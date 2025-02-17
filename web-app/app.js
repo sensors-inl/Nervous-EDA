@@ -78,7 +78,7 @@ async function onConnectBLEButtonClick() {
             bleConnected = true;
             clearInterval(searchTimer);
             enableControlButtons();
-            connectBLEButtonLabel.innerHTML = 'Disconnect BLE';
+            connectBLEButtonLabel.innerHTML = 'Disconnect';
             connectBLEStatusIcon.innerHTML = 'bluetooth_connected';
             connectBLEButton.removeAttribute('disabled');
             connectBLEStatusIcon.removeAttribute('disabled');
@@ -89,7 +89,7 @@ async function onConnectBLEButtonClick() {
             console.error("BLE Connection error " + err);
             alert("Unable to connect");
             clearInterval(searchTimer);
-            connectBLEButtonLabel.innerHTML = 'Connect BLE';
+            connectBLEButtonLabel.innerHTML = 'Connect';
             connectBLEStatusIcon.innerHTML = 'bluetooth';
             connectBLEButton.removeAttribute('disabled');
         }
@@ -104,7 +104,7 @@ function bleOnDisconnected(event) {
     console.log(event);
     bleConnected = false;
     disableAllButtons();
-    connectBLEButtonLabel.innerHTML = 'Connect BLE';
+    connectBLEButtonLabel.innerHTML = 'Connect';
     connectBLEStatusIcon.innerHTML = 'bluetooth';
     connectBLEButton.removeAttribute('disabled');
     connectBLEStatusIcon.setAttribute('disabled', '');
@@ -344,12 +344,12 @@ const nyquistChart = new Chart(document.getElementById('app-nyquist-chart-canvas
         maintainAspectRatio: false,
         scales: {
             x: { // defining min and max so hiding the dataset does not change scale range
-                suggestedMin: 0,
-                suggestedMax: 10000,
+                suggestedMin: -10000,
+                suggestedMax: 90000,
             },
             y: { // defining min and max so hiding the dataset does not change scale range
-                suggestedMin: -10000,
-                suggestedMax: 0,
+                suggestedMin: -40000,
+                suggestedMax: 10000,
                 reverse: true,
             },
         },
