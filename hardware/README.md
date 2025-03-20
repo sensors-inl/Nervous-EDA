@@ -4,7 +4,7 @@
 
 <p align="center">
     <a href="https://www.kicad.org/">
-        <img alt="KiCad v7.0.8" src="https://img.shields.io/badge/v7.0.8-grey?label=KiCad&labelColor=blue" />
+        <img alt="KiCad v9.0.0" src="https://img.shields.io/badge/v9.0.0-grey?label=KiCad&labelColor=blue" />
     </a>
     <a href="https://opensource.org/licenses/MIT">
         <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
@@ -30,7 +30,7 @@
 ![Nervous EDA printed circuit board](../assets/nervous-eda-pcb.png "Nervous EDA printed circuit board")
 
 This folder contains ECAD files for the production of PCBs and assembly of circuits for the Nervous EDA sensor.
-The printed circuit board was designed using the open source electronics design automation suite [KiCad EDA](https://www.kicad.org/) v7.0.8
+The printed circuit board was designed using the open source electronics design automation suite [KiCad EDA](https://www.kicad.org/) v9.0.0
 
 ---
 
