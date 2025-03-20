@@ -3,18 +3,18 @@
     "GenerationSoftware": {
       "Vendor": "KiCad",
       "Application": "Pcbnew",
-      "Version": "7.0.1"
+      "Version": "8.0.8"
     },
-    "CreationDate": "2024-08-21T14:39:27+02:00"
+    "CreationDate": "2025-02-28T15:56:35+01:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
-      "Name": "renforce-eda",
-      "GUID": "72656e66-6f72-4636-952d-6564612e6b69",
+      "Name": "nervous-eda",
+      "GUID": "6e657276-6f75-4732-9d65-64612e6b6963",
       "Revision": "1.0"
     },
     "Size": {
-      "X": 26.254,
+      "X": 26.267,
       "Y": 40.2541
     },
     "LayerNumber": 2,
@@ -34,47 +34,47 @@
   ],
   "FilesAttributes": [
     {
-      "Path": "renforce-eda-F_Cu.gbr",
+      "Path": "nervous-eda-F_Cu.gbr",
       "FileFunction": "Copper,L1,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "renforce-eda-B_Cu.gbr",
+      "Path": "nervous-eda-B_Cu.gbr",
       "FileFunction": "Copper,L2,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "renforce-eda-F_Paste.gbr",
+      "Path": "nervous-eda-F_Paste.gbr",
       "FileFunction": "SolderPaste,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "renforce-eda-B_Paste.gbr",
+      "Path": "nervous-eda-B_Paste.gbr",
       "FileFunction": "SolderPaste,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "renforce-eda-F_Silkscreen.gbr",
+      "Path": "nervous-eda-F_Silkscreen.gbr",
       "FileFunction": "Legend,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "renforce-eda-B_Silkscreen.gbr",
+      "Path": "nervous-eda-B_Silkscreen.gbr",
       "FileFunction": "Legend,Bot",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "renforce-eda-F_Mask.gbr",
+      "Path": "nervous-eda-F_Mask.gbr",
       "FileFunction": "SolderMask,Top",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "renforce-eda-B_Mask.gbr",
+      "Path": "nervous-eda-B_Mask.gbr",
       "FileFunction": "SolderMask,Bot",
       "FilePolarity": "Negative"
     },
     {
-      "Path": "renforce-eda-Edge_Cuts.gbr",
+      "Path": "nervous-eda-Edge_Cuts.gbr",
       "FileFunction": "Profile",
       "FilePolarity": "Positive"
     }
