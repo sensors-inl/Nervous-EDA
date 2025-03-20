@@ -253,7 +253,6 @@
 			(at 0.103 -0.064971 0)
 			(unlocked yes)
 			(layer "Dwgs.User")
-			(hide yes)
 			(uuid "973a46eb-4f19-49dd-890e-e0283c893770")
 			(effects
 				(font
@@ -6897,7 +6896,6 @@
 			(at 0.033 0.030029 0)
 			(unlocked yes)
 			(layer "Dwgs.User")
-			(hide yes)
 			(uuid "72898765-260c-4fed-b3b1-59ac055397ac")
 			(effects
 				(font

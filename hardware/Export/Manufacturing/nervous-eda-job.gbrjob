@@ -3,15 +3,15 @@
     "GenerationSoftware": {
       "Vendor": "KiCad",
       "Application": "Pcbnew",
-      "Version": "8.0.8"
+      "Version": "9.0.0"
     },
-    "CreationDate": "2025-02-28T15:56:35+01:00"
+    "CreationDate": "2025-03-20T22:50:16+01:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
       "Name": "nervous-eda",
       "GUID": "6e657276-6f75-4732-9d65-64612e6b6963",
-      "Revision": "1.0"
+      "Revision": "1.0.1"
     },
     "Size": {
       "X": 26.267,
