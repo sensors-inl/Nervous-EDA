@@ -29,6 +29,7 @@ const UUIDS = {
 };
 const bleDeviceNamePrefix = "EDA"
 let bleDevice;
+let bleDeviceName;
 let bleConnected = false;
 
 
@@ -82,7 +83,8 @@ async function onConnectBLEButtonClick() {
             connectBLEStatusIcon.innerHTML = 'bluetooth_connected';
             connectBLEButton.removeAttribute('disabled');
             connectBLEStatusIcon.removeAttribute('disabled');
-            deviceLabel.innerHTML = 'Device: ' + bleDevice.name + " v" + versionValueString;;
+            bleDeviceName = bleDevice.name;
+            deviceLabel.innerHTML = 'Device: ' + bleDeviceName + " v" + versionValueString;;
             getDeviceInformation();
         }
         catch (err) {
@@ -599,7 +601,7 @@ function saveWindowData() {
     // Set filename
     let date = getFormattedTime(timeDataStart);
     date = date.replace(/:/g, "-").replace(/ /g, "_");
-    const filename = "EDA_" + date + '.csv';
+    const filename = bleDeviceName +"_" + date + '.csv';
 
     if (nyquistChart.data.datasets.length > 0) {
         // Set header
