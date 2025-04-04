@@ -451,6 +451,45 @@ const historyChart = new Chart(document.getElementById('app-history-chart-canvas
     }
 });
 
+const historyChart2 = new Chart(document.getElementById('app-history2-chart-canvas'), {
+    type: 'scatter',
+    data: {
+        labels: [],
+        datasets: [],
+    },
+    options: {
+        pointRadius: 0,
+        animation: {
+            duration: 0,
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            zoom: {
+                zoom: {
+                    wheel: {
+                        enabled: true,
+                    },
+                    pinch: {
+                        enabled: true
+                    },
+                    mode: 'x',
+                },
+                pan: {
+                    enabled: true,
+                    mode: 'x'
+                }
+            }
+        },
+        scales: {
+            x: { // defining min and max so hiding the dataset does not change scale range
+                suggestedMin: 0,
+                suggestedMax: chartTimeMax,
+            },
+        },
+    }
+});
+
 /*** Helpers ***/
 
 function onClearGraphClick() {
@@ -464,6 +503,10 @@ function onClearGraphClick() {
     historyChart.data.labels = [];
     historyChart.data.datasets = [];
     historyChart.update();
+
+    historyChart2.data.labels = [];
+    historyChart2.data.datasets = [];
+    historyChart2.update();
 
     window.data = [];
 }
@@ -594,6 +637,16 @@ function refreshHistoryChart() {
         historyChart.data.datasets[0].data.push({x:dataArray[0], y:1000000.0/Math.sqrt((real ** 2) + (imag ** 2))});
     });
     historyChart.update();
+    
+    historyChart2.data.labels = [];
+    historyChart2.data.datasets = [];
+    historyChart2.data.datasets.push({ label: EDA_FREQUENCY_LIST[15] + " Hz", labels: [], data: [], tension: 0.4, backgroundColor: colorset[1], borderColor: colorset[1], showLine: true });
+    window.data.forEach(dataArray => {
+        real = dataArray[31];
+        imag = dataArray[32];
+        historyChart2.data.datasets[0].data.push({x:dataArray[0], y:1000000.0/Math.sqrt((real ** 2) + (imag ** 2))});
+    });
+    historyChart2.update();
 }
 
 function saveWindowData() {
