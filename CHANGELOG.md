@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.2] - XXXX-XX-XX
+
+### Software - web
+
+- Add device name in exported CSV file
+- Add secondary history chart for 724 Hz
+
+## [1.1.1] - 2025-03-20
+
+### Hardware
+
+- Bump KiCad to version 9.0.0
+- Adjust decoupling capacitors positioning
+
 ## [1.1.0] - 2025-02-15
 
 - Use 32.768kHz clock instead of CPU clock for signal generation and sampling. This is much more precise to obtain the 4096 Hz sampling rate
