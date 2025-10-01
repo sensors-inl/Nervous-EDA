@@ -1,6 +1,10 @@
 # Changelog
 
-## [1.1.2] - XXXX-XX-XX
+## [1.1.2] - 2025-10-01
+
+### Hardware
+
+- JTAG connectors footprint and designator update
 
 ### Software - web
 
